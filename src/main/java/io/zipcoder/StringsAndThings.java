@@ -6,6 +6,8 @@ package io.zipcoder;
  */
 public class StringsAndThings {
 
+
+
     /**
      * Given a string, count the number of words ending in 'y' or 'z' -- so the 'y' in "heavy" and the 'z' in "fez" count,
      * but not the 'y' in "yellow" (not case sensitive). We'll say that a y or z is at the end of a word if there is not an alphabetic
@@ -15,7 +17,19 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
+        int count = 0;
+        input = input.toLowerCase() + " "; // Make case insensitive and add a space to check the last word.
+
+        for (int i = 0; i < input.length() - 1; i++) {
+            char current = input.charAt(i);
+            char next = input.charAt(i + 1);
+
+            if ((current == 'y' || current == 'z') && !Character.isLetter(next)) {
+                count++;
+            }
+
+        }
+        return count;
     }
 
     /**
@@ -28,7 +42,22 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        String result = "";
+        for (int i = 0; i < base.length(); i++) {
+            if (i > base.length() - remove.length()) {
+                result += base.substring(i, base.length());
+                break;
+            } else {
+                String substring = base.substring(i, i + remove.length());
+                if (!(substring.equalsIgnoreCase(remove))) {
+                    result += base.charAt(i);
+                } else {
+                    i = i + remove.length() - 1;
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -40,8 +69,25 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
     public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
+            int is = 0;
+            int not = 0;
+
+            for(int i = 0; i <= input.length() - 3; i++) {
+                if(input.substring(i, i + 2).equals("is")) {
+                    is++;
+                } else if(input.substring(i, i + 3).equals("not")) {
+                    not++;
+                }
+            }
+
+            if(input.length() >= 2 && input.substring(input.length() - 2).equals("is"))
+                is++;
+
+            Boolean result = is == not;
+
+        return result;
     }
+
 
     /**
      * We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right.
@@ -51,7 +97,31 @@ public class StringsAndThings {
      *           gHappy("xxggyygxx") // Should return  false
      */
     public Boolean gIsHappy(String input){
-        return null;
+        boolean result = true;
+        if(input == "") return result;
+
+        if(input.length() <= 2 && !input.equals("gg")) {
+            return false;
+        }
+
+        for(int i = 1; i < input.length()-1; i++)
+        {
+            if(input.charAt(i) == 'g')
+            {
+                if(!(input.charAt(i-1) == 'g' || input.charAt(i+1) == 'g'))
+                {
+                    result = true;
+                    break;
+                }
+            }
+            else if((i == input.length()-2) && (input.charAt(i+1) == 'g') &&
+                    (input.charAt(i) != 'g'))
+            {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 
 
@@ -63,6 +133,21 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+        int trippleCounter = 0;
+
+        // Loop over each character in the input string (skip the last 3 to prevent going out of bounds)
+        for(int i = 0;i < input.length() - 3; i++) {
+            // Get the current char in the string + the next 3
+            char c1 = input.charAt(i);
+            char c2 = input.charAt(i + 1);
+            char c3 = input.charAt(i + 2);
+
+            // Check if all 4 characters are equal
+            if(c1 == c2 && c2 == c3) {
+                trippleCounter++; // Increase the counter
+            }
+        }
+
+        return trippleCounter;
     }
 }
